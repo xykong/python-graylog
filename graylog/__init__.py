@@ -5,22 +5,19 @@
 Python logging handlers that send messages in the
 Graylog Extended Log Format (GELF).
 Modules:
- + :mod:`.handler` - Basic GELF Logging Handlers
- + :mod:`.rabbitmq` - RabbitMQ GELF Logging Handler
+ + :mod:`.http` - HTTP GELF Logging Handlers
+ + :mod:`.tcp` - TCP GELF Logging Handler
+ + :mod:`.tls` - TLS GELF Logging Handler
+ + :mod:`.udp` - UDP GELF Logging Handler
 """
 
 from graylog.handlers import (
     WAN_CHUNK,
     LAN_CHUNK,
 )
-from graylog.udp import GELFUDPHandler
+from graylog.http import GELFHTTPHandler
 from graylog.tcp import GELFTCPHandler
 from graylog.tls import GELFTLSHandler
-from graylog.http import GELFHTTPHandler
+from graylog.udp import GELFUDPHandler
 
-try:
-    from graylog.rabbitmq import GELFRabbitHandler, ExcludeFilter
-except ImportError:
-    pass  # amqplib is probably not installed
-
-__version__ = (2, 1, 0)
+__version__ = (0, 1, 0)

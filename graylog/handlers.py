@@ -3,7 +3,6 @@
 
 """Logging Handlers that send messages in Graylog Extended Log Format (GELF)"""
 
-import warnings
 import abc
 import datetime
 import json
@@ -14,6 +13,7 @@ import socket
 import struct
 import sys
 import traceback
+import warnings
 import zlib
 
 WAN_CHUNK = 1420
