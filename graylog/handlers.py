@@ -106,7 +106,8 @@ class BaseGELFHandler(logging.Handler, ABC):
         self.level_names = level_names
         self.compress = compress
 
-    def make_pickle(self, record):
+    # noinspection PyPep8Naming
+    def makePickle(self, record):
         """Convert a :class:`logging.LogRecord` into bytes representing
         a GELF log
 

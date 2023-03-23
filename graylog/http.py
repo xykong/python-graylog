@@ -48,7 +48,7 @@ class GELFHTTPHandler(BaseGELFHandler):
             and emit to Graylog via an HTTP POST request.
         :type record: logging.LogRecord
         """
-        pickle = self.make_pickle(record)
+        pickle = self.makePickle(record)
         connection = httplib.HTTPConnection(
             host=self.host, port=self.port, timeout=self.timeout
         )

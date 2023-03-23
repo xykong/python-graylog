@@ -25,7 +25,7 @@ class GELFTCPHandler(BaseGELFHandler, SocketHandler):
         BaseGELFHandler.__init__(self, compress=False, **kwargs)
         SocketHandler.__init__(self, host, port)
 
-    def make_pickle(self, record):
+    def makePickle(self, record):
         """Add a null terminator to generated pickles as TCP frame objects
         need to be null terminated
 
@@ -36,4 +36,4 @@ class GELFTCPHandler(BaseGELFHandler, SocketHandler):
         :return: Null terminated bytes representing a GELF log.
         :rtype: bytes
         """
-        return super(GELFTCPHandler, self).make_pickle(record) + b"\x00"
+        return super(GELFTCPHandler, self).makePickle(record) + b"\x00"
