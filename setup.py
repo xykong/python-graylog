@@ -84,7 +84,7 @@ setup(
         "pytest-cov<=2.6.0,<3.0.0",
         "pylint>=1.9.3,<2.0.0",
         "mock>=2.0.0,<3.0.0",
-        "requests>=2.20.1,<3.0.0",
+        "requests>2.28.2,<3.0.0",
     ],
     extras_require={
         "docs": [
