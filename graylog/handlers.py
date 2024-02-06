@@ -54,8 +54,10 @@ class BaseGELFHandler(logging.Handler, ABC):
 
     def __init__(
             self,
+            *,
             debugging_fields=True,
             extra_fields=True,
+            args_fields=True,
             fqdn=False,
             localname=None,
             facility=None,
@@ -71,6 +73,10 @@ class BaseGELFHandler(logging.Handler, ABC):
         :param extra_fields: If :obj:`True` add extra fields from the log
             record into the GELF logs to be sent to Graylog.
         :type extra_fields: bool
+
+        :param args_fields: If :obj:`True` add args fields from the log
+            record into the GELF logs to be sent to Graylog.
+        :type args_fields: bool
 
         :param fqdn: If :obj:`True` use the fully qualified domain name of
             localhost to populate the ``host`` GELF field.
@@ -96,6 +102,7 @@ class BaseGELFHandler(logging.Handler, ABC):
         logging.Handler.__init__(self)
         self.debugging_fields = debugging_fields
         self.extra_fields = extra_fields
+        self.args_fields = args_fields
 
         if fqdn and localname:
             raise ValueError("cannot specify 'fqdn' and 'localname' arguments together")
@@ -154,6 +161,8 @@ class BaseGELFHandler(logging.Handler, ABC):
             self._add_debugging_fields(gelf_dict, record)
         if self.extra_fields:
             self._add_extra_fields(gelf_dict, record)
+        if self.args_fields:
+            self._add_args_fields(gelf_dict, record)
         return gelf_dict
 
     @staticmethod
@@ -313,6 +322,13 @@ class BaseGELFHandler(logging.Handler, ABC):
         for key, value in record.__dict__.items():
             if key not in skip_list and not key.startswith("_"):
                 gelf_dict["_%s" % key] = value
+
+    @staticmethod
+    def _add_args_fields(gelf_dict, record):
+        if not isinstance(record.args, dict):
+            return
+        for key, value in record.args.items():
+            gelf_dict["_%s" % key] = value
 
     @classmethod
     def _pack_gelf_dict(cls, gelf_dict):
