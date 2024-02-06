@@ -349,6 +349,8 @@ class BaseGELFHandler(logging.Handler, ABC):
             )
         if isinstance(obj, (list, tuple)):
             return obj.__class__([cls._sanitize_to_unicode(i) for i in obj])
+        if isinstance(obj, bool):
+            return str(obj)
         if isinstance(obj, data):
             obj = obj.decode("utf-8", errors="replace")
         return obj
